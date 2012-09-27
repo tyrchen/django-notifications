@@ -12,7 +12,7 @@ setup(name='django-notifications-hq',
                 'notifications.templatetags'],
       package_data={'notifications': [
         'templates/notifications/*.html']},
-      classifiers=['Development Status :: 3 - Alpha/Unstable',
+      classifiers=['Development Status :: 3 - Alpha',
                    'Environment :: Web Environment',
                    'Framework :: Django',
                    'Intended Audience :: Developers',

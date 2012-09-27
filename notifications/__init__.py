@@ -6,8 +6,8 @@ except ImportError:
 __version_info__ = {
     'major': 0,
     'minor': 5,
-    'micro': 2,
-    'releaselevel': 'final',
+    'micro': 3,
+    'releaselevel': 'alpha',
     'serial': 0
 }
 
