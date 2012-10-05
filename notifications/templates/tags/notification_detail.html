@@ -1,0 +1,32 @@
+{% if action.action_object %}
+
+  <div class="act">
+    <div class="body">
+      <div class="title">
+        <i class="{% if action.readed %}icon-envelope{% else %}icon-envelope-alt{% endif %}"></i>
+        {% if action.actor.get_absolute_url %}
+        <a href="{{ action.actor.get_absolute_url }}">{{ action.actor }}</a>
+        {% endif %}
+
+        {{ action.verb }}了
+
+        {% if action.target.get_type %}
+        您的 {{ action.target.get_type }}
+        <a href="{% url notifications_read action.slug %}?next={{ action.target.get_absolute_url }}">{{ action.target }}</a>
+        {% else %}
+        <a href="{% url notifications_read action.slug %}?next=/notifications/">您</a>
+        {% endif %}
+
+        <a href="{% url notifications_read action.slug %}?next=/notifications/">知道了</a>
+      </div>
+      <div class="details">
+        {% if action.description %}
+        <div class="message">
+          <a href="{% url notifications_read action.slug %}?next={{ action.action_object.get_absolute_url }}">{{ action.description|linebreaksbr }}</a>
+        </div>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+
+{% endif %}

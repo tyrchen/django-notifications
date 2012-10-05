@@ -52,3 +52,10 @@ def notifications_unread(parser, token):
         return InboxCountNode(bits[2])
     else:
         return InboxCountNode()
+
+
+@register.inclusion_tag('templates/tags/notification_detail.html')
+def notification_detail(action):
+  return {
+    'action': action
+  }
