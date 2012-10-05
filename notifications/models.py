@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
 from datetime import datetime
-from django.contrib.auth.models import User as DjangoUser
+from django.contrib.auth.models import User
 from django.contrib.contenttypes.models import ContentType
 from django.contrib.contenttypes import generic
 from django.db import models
@@ -10,13 +10,6 @@ from notifications.managers import NotificationManager
 from notifications.signals import notify
 
 now = datetime.now
-
-class User(DjangoUser):
-  class Meta:
-    proxy = True
-
-  def get_absolute_url(self):
-    return '/accounts/' + self.id + '/'
 
 class Notification(models.Model):
     """
