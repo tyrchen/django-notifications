@@ -14,7 +14,7 @@ class NotificationManager(models.Manager):
       action_object_type = ContentType.objects.get_for_model(action_object)
       target_type = ContentType.objects.get_for_model(target)
       return self.filter(
-        readed = False,
+        #readed = False,
         actor_content_type = actor_type,
         actor_object_id = sender.id,
         recipient = recipient,
