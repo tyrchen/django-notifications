@@ -28,6 +28,7 @@ def list(request):
 
     return render_to_response('notifications/list.html', {
         'member': request.user,
+        'unread_count': Notification.objects.unread_count(request.user),
         'action_list': action_list,
     }, context_instance=RequestContext(request))
 
