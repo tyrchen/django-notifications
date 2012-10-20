@@ -42,6 +42,7 @@ class Notification(models.Model):
     """
     recipient = models.ForeignKey(User, blank=False, related_name='notifications', verbose_name='接收者')
     readed = models.BooleanField('已读', default=False, blank=False)
+    visited = models.BooleanField('已阅', default=False, blank=False)
 
     actor_content_type = models.ForeignKey(ContentType, related_name='notify_actor')
     actor_object_id = models.CharField(max_length=255)
@@ -93,7 +94,7 @@ class Notification(models.Model):
         return '%s %s了您的 %s%s' % (self.actor, self.verb, self.target.get_type(), self.target)
       else:
         return '%s %s了您' % (self.actor, self.verb)
-      
+
     def timesince(self, now=None):
         """
         Shortcut for the ``django.utils.timesince.timesince`` function of the

@@ -12,6 +12,7 @@ def list(request):
     """
     Index page for authenticated user
     """
+    Notification.objects.mark_all_as_visited(request.user)
     actions = Notification.objects.filter(recipient=request.user)
 
     paginator = Paginator(actions, 16) # Show 16 notifications per page
