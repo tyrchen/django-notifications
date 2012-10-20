@@ -3,11 +3,14 @@ from django.db import models
 
 
 class NotificationManager(models.Manager):
+    def unread(self, user):
+      return self.filter(recipient=user, readed=False)
+
     def unread_count(self, user):
-        return self.filter(recipient=user, readed=False).count()
+      return self.unread(user).count()
 
     def mark_all_as_read(self, recipient):
-        return self.filter(recipient=recipient, readed=False).update(readed=True)
+        return self.unread(recipient).update(readed=True)
 
     def withdraw(self, sender, recipient, verb, action_object, target):
       actor_type = ContentType.objects.get_for_model(sender)
