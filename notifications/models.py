@@ -90,7 +90,7 @@ class Notification(models.Model):
         return '%(actor)s %(verb)s %(timesince)s ago' % ctx
 
     def content(self):
-      if self.target.get_type():
+      if self.target and self.target.get_type():
         return '%s %s了您的 %s%s' % (self.actor, self.verb, self.target.get_type(), self.target)
       else:
         return '%s %s了您' % (self.actor, self.verb)
