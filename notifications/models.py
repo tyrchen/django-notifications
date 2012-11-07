@@ -4,6 +4,7 @@ from datetime import datetime
 from django.contrib.auth.models import User
 from django.contrib.contenttypes.models import ContentType
 from django.contrib.contenttypes import generic
+from django.core.urlresolvers import reverse
 from django.db import models
 from .utils import id2slug
 from notifications.managers import NotificationManager
@@ -90,11 +91,18 @@ class Notification(models.Model):
         return '%(actor)s %(verb)s %(timesince)s ago' % ctx
 
     def content(self):
-
-      if self.target and getattr(self.target, 'get_type', None):
-        return '%s %s了您的 %s%s' % (self.actor, self.verb, self.target.get_type(), self.target)
+      url_read = reverse('notifications_read', args=[self.slug])
+      if getattr(self.target, 'get_type', ''):
+        content = '%s 了您的 %s <a href="%s?next=%s">%s</a>' % (
+          self.verb, self.target.get_type(), url_read,
+          self.target.get_absolute_url(), unicode(self.target)
+          )
+      elif self.verb.startswith('发送'):
+        content = '发送 了一条 <a href="%s?next=/messages/">私信</a>' % (url_read)
       else:
-        return '%s %s了您' % (self.actor, self.verb)
+        content = '关注 了 <a href="%s?next=/notifications/">您</a>' % url_read
+
+      return content
 
     def timesince(self, now=None):
         """
