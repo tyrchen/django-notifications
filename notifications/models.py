@@ -102,6 +102,14 @@ class Notification(models.Model):
 
       return content
 
+    def url(self):
+      if getattr(action.target, 'get_type', ''):
+        return self.target.get_absolute_url()
+      elif self.verb.startswith('发送'):
+        return '/messages/'
+      else:
+        return '/notifications/'
+      
     def timesince(self, now=None):
         """
         Shortcut for the ``django.utils.timesince.timesince`` function of the
