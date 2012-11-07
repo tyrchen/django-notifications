@@ -91,16 +91,14 @@ class Notification(models.Model):
         return '%(actor)s %(verb)s %(timesince)s ago' % ctx
 
     def content(self):
-      url_read = reverse('notifications_read', args=[self.slug])
       if getattr(self.target, 'get_type', ''):
-        content = '%s 了您的 %s <a href="%s?next=%s">%s</a>' % (
-          self.verb, self.target.get_type(), url_read,
-          self.target.get_absolute_url(), unicode(self.target)
+        content = '%s%s了您的%s%s' % (
+          self.actor, self.verb, self.target.get_type(), unicode(self.target)
           )
       elif self.verb.startswith('发送'):
-        content = '发送 了一条 <a href="%s?next=/messages/">私信</a>' % (url_read)
+        content = '%s发送了一条私信' % self.actor
       else:
-        content = '关注 了 <a href="%s?next=/notifications/">您</a>' % url_read
+        content = '%s关注了您' % self.actor
 
       return content
 
