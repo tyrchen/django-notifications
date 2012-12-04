@@ -108,7 +108,7 @@ class Notification(models.Model):
       elif self.verb.startswith('发送'):
         return '/messages/'
       elif self.verb.startswith('关注'):
-        return '/accounts/%d/' + self.actor.id
+        return '/accounts/%d/' % self.actor.id
       else:
         return '/notifications/'
 
