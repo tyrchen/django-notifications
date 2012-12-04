@@ -107,6 +107,8 @@ class Notification(models.Model):
         return self.target.get_absolute_url()
       elif self.verb.startswith('发送'):
         return '/messages/'
+      elif self.verb.startswith('关注'):
+        return '/accounts/' + self.actor.id + '/'
       else:
         return '/notifications/'
 
