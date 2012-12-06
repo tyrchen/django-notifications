@@ -15,14 +15,15 @@ def list(request):
     Notification.objects.mark_all_as_visited(request.user)
     actions = Notification.objects.filter(recipient=request.user)
 
-    paginator = Paginator(actions, 16) # Show 16 notifications per page
-    page = request.GET.get('p')
+    paginator = Paginator(actions, 12) # Show 16 notifications per page
+    page = int(request.GET.get('p'))
 
     try:
         action_list = paginator.page(page)
     except PageNotAnInteger:
         # If page is not an integer, deliver first page.
-        action_list = paginator.page(1)
+        page = 1
+        action_list = paginator.page(page)
     except EmptyPage:
         # If page is out of range (e.g. 9999), deliver last page of results.
         action_list = paginator.page(paginator.num_pages)
@@ -31,6 +32,9 @@ def list(request):
         'member': request.user,
         'unread_count': Notification.objects.unread_count(request.user),
         'action_list': action_list,
+        'total_page': len(actions),
+        'current_page': page,
+        'current_url': '/notifications/?p=',
     }, context_instance=RequestContext(request))
 
 @login_required
