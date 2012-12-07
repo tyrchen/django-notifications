@@ -16,7 +16,9 @@ def list(request):
     actions = Notification.objects.filter(recipient=request.user)
 
     paginator = Paginator(actions, 12) # Show 16 notifications per page
-    page = int(request.GET.get('p'))
+    page = request.GET.get('p')
+    if not isinstance(page, int) and page is not None:
+      page = int(page)
 
     try:
         action_list = paginator.page(page)
