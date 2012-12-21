@@ -34,7 +34,7 @@ def list(request):
         'member': request.user,
         'unread_count': Notification.objects.unread_count(request.user),
         'action_list': action_list,
-        'total_page': len(actions),
+        'total_page': paginator.num_pages,
         'current_page': page,
         'current_url': '/notifications/?p=',
     }, context_instance=RequestContext(request))

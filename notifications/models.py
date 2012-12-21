@@ -92,13 +92,13 @@ class Notification(models.Model):
 
     def content(self):
       if getattr(self.target, 'get_type', ''):
-        content = '%s%s了您的%s%s' % (
-          self.actor, self.verb, self.target.get_type(), unicode(self.target)
+        content = '%s %s了你的%s %s' % (
+          self.actor, self.verb.strip(), self.target.get_type(), unicode(self.target)
           )
       elif self.verb.startswith('发送'):
-        content = '%s发送了一条私信' % self.actor
+        content = '%s 发送了一条私信' % self.actor
       else:
-        content = '%s关注了您' % self.actor
+        content = '%s 关注了 你' % self.actor
 
       return content
 
