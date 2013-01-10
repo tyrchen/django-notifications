@@ -6,11 +6,12 @@ from django.contrib.contenttypes.models import ContentType
 from django.contrib.contenttypes import generic
 from django.core.urlresolvers import reverse
 from django.db import models
+from django.utils import timezone
 from .utils import id2slug
 from notifications.managers import NotificationManager
 from notifications.signals import notify
 
-now = datetime.now
+now = timezone.now
 
 class Notification(models.Model):
     """
